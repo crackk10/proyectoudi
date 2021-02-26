@@ -20,3 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('productos', 'Admin\productosController')
+->only([
+    'index', 'create','store','show','edit','update','destroy',
+    ])
+    ->names([
+    'index' => 'productos',
+    'create' => 'productos.crear',
+    'store' => 'productos/guardar',
+    'show' => 'productos/detalle',
+    'edit' => 'productos/editar',
+    'update' => 'productos/actualizar',
+    'destroy' => 'productos/eliminar',
+    
+])->middleware('auth');

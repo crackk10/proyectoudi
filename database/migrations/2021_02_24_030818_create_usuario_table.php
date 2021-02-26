@@ -21,7 +21,7 @@ class CreateUsuarioTable extends Migration
             $table->foreign('tipo_usuario','fk_usuario_tipoUsuario')->references('id')->on('tipo_usuario')->onDelete('restrict')->onUpdate('restrict');  
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password',15);
+            $table->string('password',255);
             $table->unsignedBigInteger('id_estado');
             $table->foreign('id_estado','fk_usuario_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
             $table->rememberToken();
