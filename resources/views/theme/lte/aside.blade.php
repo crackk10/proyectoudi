@@ -31,14 +31,14 @@
         <li class="header">Menu de navegación</li>
         <li class="treeview">
         <a href="">
-            <i class="fa fa-paper-plane"></i> <span>Correspondencia</span>
+            <i class="fa fa-folder-open"></i> <span>Administracion</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('entrada')}}"><i class="fa fa-circle-o"></i>Entrada</a></li>
-            <li><a href="{{route('salida')}}"><i class="fa fa-circle-o"></i>Salida</a></li>
+            <li><a href="{{route('productos')}}"><i class="fa fa-circle-o"></i>Productos</a></li>
+            <li>{{-- <a href="{{route('salida')}}"><i class="fa fa-circle-o"></i>Salida</a> --}}</li>
           </ul>
         </li>
  

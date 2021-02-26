@@ -17,6 +17,7 @@ class CreateProductoTable extends Migration
             $table->id();
             $table->string('nombre', 40);
             $table->bigInteger('valor');
+            $table->string('descripcion', 200);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

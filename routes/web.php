@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('productos.listar{page?}','Admin\productosController@listar')->name('productos.listar');
 Route::resource('productos', 'Admin\productosController')
 ->only([
     'index', 'create','store','show','edit','update','destroy',
