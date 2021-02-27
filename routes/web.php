@@ -36,3 +36,37 @@ Route::resource('productos', 'Admin\productosController')
     'destroy' => 'productos/eliminar',
     
 ])->middleware('auth');
+
+
+Route::get('vehiculos.listar{page?}','Admin\vehiculosController@listar')->name('vehiculos.listar');
+Route::resource('vehiculos', 'Admin\vehiculosController')
+->only([
+    'index', 'create','store','show','edit','update','destroy',
+    ])
+    ->names([
+    'index' => 'vehiculos',
+    'create' => 'vehiculos.crear',
+    'store' => 'vehiculos/guardar',
+    'show' => 'vehiculos/detalle',
+    'edit' => 'vehiculos/editar',
+    'update' => 'vehiculos/actualizar',
+    'destroy' => 'vehiculos/eliminar',
+    
+])->middleware('auth');
+
+
+Route::get('transportadoras.listar{page?}','Admin\transportadoraController@listar')->name('transportadoras.listar');
+Route::resource('transportadoras', 'Admin\transportadoraController')
+->only([
+    'index', 'create','store','show','edit','update','destroy',
+    ])
+    ->names([
+    'index' => 'transportadoras',
+    'create' => 'transportadoras.crear',
+    'store' => 'transportadoras/guardar',
+    'show' => 'transportadoras/detalle',
+    'edit' => 'transportadoras/editar',
+    'update' => 'transportadoras/actualizar',
+    'destroy' => 'transportadoras/eliminar',
+    
+])->middleware('auth');

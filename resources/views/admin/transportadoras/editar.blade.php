@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Editar Producto
+    Editar transportadora
 @endsection
 
 @section('metadata')
@@ -38,15 +38,12 @@
                     </div>
                     {{-- /boton regresar --}}
                     <div class="col-lg-8 text-center">
-                        <h3 class="box-title">Editar Producto</h3>
+                        <h3 class="box-title">Editar Transportadora</h3>
                     </div>
                     <?php
                         $id=0; 
-                        $area=0; 
-                        $documento=0;
                         $estado=0;
-                        $es_respuesta="No";
-                        $requiere_respuesta="No";
+                        
                     ?>
                     @foreach ($detalle as $item) 
 
@@ -74,33 +71,59 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <strong>nombre</strong>  
+                                    <strong>Razon social</strong>  
                                 </th>
                                 <td>
-                                    <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{ $item->nombre}}">
+                                    <input  type="text" id="razon_social" name="razon_social" class="form-control"  value="{{ $item->razon_social}}">
                                 </td>
                             </tr>                            
                             <tr>
                                 <th>
-                                    <strong>Precio</strong>  
+                                    <strong>Nit</strong>  
                                 </th>
                                 <td>
-                                    <input  type="number" id="valor" name="valor" class="form-control"  value="{{ $item->valor}}">
+                                    <input  type="number" id="nit" name="nit" class="form-control"  value="{{ $item->nit}}">
                                 </td>
                             </tr>
-
-
                             <tr>
                                 <th>
-                                    <strong>descripcion</strong>  
+                                    <strong>Telefono</strong>  
                                 </th>
                                 <td>
-                                    <textarea name="descripcion" id="observacines" class="form-control" cols="10" rows="3">{{ $item->descripcion}}</textarea>
+                                    <input  type="number" id="telefono" name="telefono" class="form-control"  value="{{ $item->telefono}}">
                                 </td>
-                                
                             </tr>
+                            <tr>
+                                <th>
+                                    <strong>Direccion</strong>  
+                                </th>
+                                <td>
+                                    <input  type="text" id="direccion" name="direccion" class="form-control"  value="{{ $item->direccion}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <strong>E-mail</strong>  
+                                </th>
+                                <td>
+                                    <input  type="text" id="email" name="email" class="form-control"  value="{{ $item->email}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <strong>Estado</strong> 
+                                </th>
+                                <td>
+                                    <select class="form-control " id="id_estado" name="id_estado" >
+                                        <option value="1">Activo</option>
+                                        <option value="2">Inactivo</option>
+                                    </select>
+                                </td>
+                            </tr>
+
                             <?php
                                 $id=$item->id; 
+                                $estado=$item->id_estado;
                             ?>
                         
                         </table>
@@ -108,7 +131,7 @@
                         
                         <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
                     
-                    <a href="{{route("productos")}}" class="btn btn-primary">Cancelar</a>
+                    <a href="{{route("transportadoras")}}" class="btn btn-primary">Cancelar</a>
                         <input type="submit" value="Actualizar" class="btn btn-primary">
                     
                     
@@ -132,19 +155,19 @@
 </div>  
 
 
-@include('admin/productos/includes/modalConfirmDelet')
+@include('admin/transportadoras/includes/modalConfirmDelet')
 
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script>
     $(document).on('ready',function(){
-
+        $("#id_estado option[value="+{{$estado}}+"]").prop('selected', true);
        
        });              
     $('#formulario').on('submit', function(e){
             e.preventDefault();
             
-            var url = "{{route('productos/actualizar',$id)}}";
+            var url = "{{route('transportadoras/actualizar',$id)}}";
             var token = $("#token").val();
             
             $.ajax({                        
@@ -158,10 +181,10 @@
                     {
                         console.log("Actualizado exitosamente");
 
-                        toastr.success( 'Producto Actualizado', 'Exito',{
+                        toastr.success( 'Transportadora Actualizada', 'Exito',{
                         "positionClass": "toast-top-right"});
 
-                        setTimeout("location.href='{{route('productos')}}'",2000);  
+                        setTimeout("location.href='{{route('transportadoras')}}'",2000);  
                     }  
                              
                 },
@@ -183,7 +206,7 @@
         });
     $('#confirmar').on('click', function(){
         
-        var url = "{{route('productos/eliminar',$id)}}";
+        var url = "{{route('transportadoras/eliminar',$id)}}";
         var token = $("#token").val();
         
         $.ajax({                        
@@ -195,10 +218,10 @@
             {   if (data.success=='true') 
                 {   
                     console.log("Eliminado exitosamente");
-                    toastr.success( 'Producto Eliminado', 'Exito',{
+                    toastr.success( 'Transportadora Eliminada', 'Exito',{
                     "positionClass": "toast-top-right"});
                     $("#cerrarModal").trigger('click');
-                    setTimeout("location.href='{{route('productos')}}'",2000);  
+                    setTimeout("location.href='{{route('transportadoras')}}'",2000);  
                 }
             },
             error: function (data)

@@ -18,7 +18,7 @@ class CreateTransportadorasTable extends Migration
             $table->string('razon_social',50);
             $table->string('nit',30);
             $table->string('telefono',15);
-            $table->string('direccion',50)->nullable();
+            $table->string('direccion',90)->nullable();
             $table->unsignedBigInteger('id_estado');
             $table->foreign('id_estado','fk_transportadora_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
             $table->string('email',50)->unique()->nullable();

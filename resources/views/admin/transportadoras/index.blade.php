@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-Productos
+Transportadoras
 @endsection
 
 @section('contenido')
@@ -11,7 +11,7 @@ Productos
         <div class="box box-danger">
             <!-- box-tittle -->
                 <div class="box-header with-border">
-                    <div class="col-lg-12"> @include('admin/productos/includes/selectFiltro')</div>
+                    <div class="col-lg-12"> @include('admin/transportadoras/includes/selectFiltro')</div>
                     
                 </div>
             <!-- /.box-tittle -->  
@@ -25,7 +25,7 @@ Productos
                     <div class="col-lg-6">
                     @auth
                         @if ( auth()->user()->tipo_usuario=="2")
-                            <a class="btn btn-primary"href="{{route('productos.crear')}}">Nuevo Producto</a>   
+                            <a class="btn btn-primary"href="{{route('transportadoras.crear')}}">Nuevo Registro</a>   
                         @endif
                     @endauth
                     
@@ -47,7 +47,7 @@ Productos
     });
     /* buscar */
     $("#buscar").keyup(function (evento) {
-        var url = "{{route('productos.listar')}}";
+        var url = "{{route('transportadoras.listar')}}";
         $.ajax({
             type: "get",
             url: url,
@@ -60,7 +60,7 @@ Productos
     });
     /* cambio de area */
     $('#filtro').on('change',function(){   
-        var url = "{{route('productos.listar')}}";                                 
+        var url = "{{route('transportadoras.listar')}}";                                 
         $.ajax({                        
                 type: "get",                 
                 url: url,                    

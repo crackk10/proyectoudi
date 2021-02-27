@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-Productos
+Correspondencia de Entrada
 @endsection
 
 @section('contenido')

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidarProductos;
-use App\Models\Producto;
+use App\Http\Requests\ValidarTransportadora;
+use App\Models\Transportadora;
 use Illuminate\Http\Request;
 
-class ProductosController extends Controller
+class TransportadoraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ProductosController extends Controller
     public function index()
     {
         //
-        return view('admin/productos/index');
+        return view('admin/transportadoras/index');
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductosController extends Controller
     {
         //
         if ( auth()->user()->tipo_usuario=="2"&&  auth()->user()->id_estado=="1" ){
-            return view('admin/productos/crear');
+            return view('admin/transportadoras/crear');
         }else{
             return back();
         }
@@ -41,18 +41,20 @@ class ProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidarProductos  $request)
+    public function store(ValidarTransportadora $request)
     {
-        //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) { 
-                $producto = new Producto();
-                $producto->nombre = $request->nombre;
-                $producto->valor = $request->valor;
-                $producto->descripcion = $request->descripcion;
-                $producto->save();
+                $transportadora = new Transportadora();
+                $transportadora->razon_social = $request->razon_social;
+                $transportadora->nit = $request->nit;
+                $transportadora->telefono = $request->telefono;
+                $transportadora->direccion = $request->direccion;
+                $transportadora->email = $request->email;
+                $transportadora->id_estado = $request->id_estado;
+                $transportadora->save();
 
-                if ($producto->save()) {
+                if ($transportadora->save()) {
                     return response()->json(['success'=>'true']);
                 }else { 
                     return response()->json(['success'=>'false']);
@@ -66,10 +68,10 @@ class ProductosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  \App\Models\Transportadora  $transportadora
      * @return \Illuminate\Http\Response
      */
-    public function show(Producto $producto)
+    public function show(Transportadora $transportadora)
     {
         //
     }
@@ -77,38 +79,38 @@ class ProductosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  \App\Models\Transportadora  $transportadora
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit(Transportadora $transportadora)
     {
-        //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
-            $detalle= Producto::select()
-            ->from('Producto')
-            ->where('producto.id','=',"$producto->id")
+            $detalle= Transportadora::select()
+            ->from('transportadora')
+            ->where('transportadora.id','=',"$transportadora->id")
             ->get();
-            return view('admin/productos/editar',compact('detalle'));  
+            return view('admin/transportadoras/editar',compact('detalle'));  
         }else{
             return back();
         }
      
         
-       return view('admin/productos/detalle',compact('detalle'));
+       return view('admin/transportadora/detalle',compact('detalle'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Producto  $producto
+     * @param  \App\Models\Transportadora  $transportadora
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidarProductos $request, Producto $producto)
+    public function update(Request $request, Transportadora $transportadora)
     {
+        //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) {
-                  $registro=Producto::findOrFail($producto->id);
+                  $registro=Transportadora::findOrFail($transportadora->id);
                   $formulario=$request->all();
                   $resultado=$registro->fill($formulario)->save();   
                   if ($resultado) {
@@ -125,14 +127,14 @@ class ProductosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Producto  $producto
+     * @param  \App\Models\Transportadora  $transportadora
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy(Transportadora $transportadora)
     {
         //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
-            $registro=Producto::findOrFail($producto->id);
+            $registro=Transportadora::findOrFail($transportadora->id);
             $resultado=$registro->delete();
             if ($resultado) {
             return response()->json(['success'=>'true']);
@@ -145,24 +147,31 @@ class ProductosController extends Controller
     }
 
     public function listar(Request $request){
-        if (auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1") {
+        if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){   
             if ($request->filtro!="0" && $request->buscar!="") {
-                $datos= Producto::select()
+                $datos= Transportadora::select('estado.nombre','transportadora.*')
                 ->orderBy('created_at','desc')
-                ->from('producto')
+                ->from('transportadora')
+                ->join('estado','estado.id','=','transportadora.id_estado')
                 ->where([
-                            ["$request->filtro",'LIKE',"$request->buscar%"]
-                        ])
+                    ["$request->filtro",'LIKE',"$request->buscar%"]
+                    ])
                 ->paginate(6);
-                return view('admin/productos/listar')->with('datos',$datos);
+                return view('admin/transportadoras/listar')->with('datos',$datos);
             }else
             {
-                $datos= Producto::select()
+                $datos= Transportadora::select('estado.nombre','transportadora.*')
                 ->orderBy('created_at','desc')
-                ->from('producto')
+                ->from('transportadora')
+                ->join('estado','estado.id','=','transportadora.id_estado')
                 ->paginate(6);
-                return view('admin/productos/listar')->with('datos',$datos);
-            } 
+                return view('admin/transportadoras/listar')->with('datos',$datos);
+            }
+        }else{
+            return back();
         }
+
+        
+
     } 
 }
