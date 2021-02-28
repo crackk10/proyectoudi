@@ -25,7 +25,7 @@
                     <div class="col-lg-3">
                         @include('admin/transportadoras/includes/boton_regresar')
                     </div>
-                    <h3 class="box-title">Registro de Transportadoras</h3>  
+                    <h3 class="box-title"><strong>Registro de Transportadoras</strong></h3>  
                 </div>
             <!-- /.box-tittle -->
             <!-- box-body -->
@@ -76,7 +76,7 @@
                 {
                     console.log("guardo exitosamente");
                     
-                    toastr.success( 'Producto Agregado', 'Exito',{
+                    toastr.success( 'Transportadora Agregada', 'Exito',{
                     "positionClass": "toast-top-right"})
                 }  
                 $("#reiniciar").trigger('click')         

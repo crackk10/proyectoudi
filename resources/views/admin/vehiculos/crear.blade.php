@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Registro de Productos
+    Registro de Vehiculos
 @endsection
 
 @section('metadata'){{-- estilos de plugin fileinput --}}
@@ -23,16 +23,16 @@
             <!-- box-tittle -->
                 <div class="box-header with-border">
                     <div class="col-lg-3">
-                        @include('admin/productos/includes/boton_regresar')
+                        @include('admin/vehiculos/includes/boton_regresar')
                     </div>
-                    <h3 class="box-title">Registro de Productos</h3>  
+                    <h3 class="box-title"><strong>Registro de Vehiculos</strong></h3>  
                 </div>
             <!-- /.box-tittle -->
             <!-- box-body -->
                 <div class="box-body">
                 <form class="form-horizontal"  id="formulario"  autocomplete="off" enctype="multipart/form-data">
                                         
-                    @include('admin/productos/includes/form')
+                    @include('admin/vehiculos/includes/form')
                 </div>
             <!-- /.box-body -->
             <!-- box-footer -->
@@ -48,25 +48,35 @@
     </div>
 </div>   
 
-   
-
-
-
-
-
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script>
     $(document).on('ready',function(){
-       
-               
+        //agregar transportadora al select
+        $.ajax({
+        type: "get",
+        url: "{{route('vehiculos/transportadora')}}",
+        data: "formdata",
+        dataType: "json",
+        success: function (data) {
+            $('#id_transportadora').html('');
+            $.each(data, function (indexInArray, valueOfElement) { 
+                if (valueOfElement.id_estado!=2) {
+                        $("#id_transportadora").append("<option value="+valueOfElement.id+">"+valueOfElement.razon_social+"</option>"); 
+                /* console.log(valueOfElement.id_estado) */
+                }
+            });   
+        }
+        }); 
+        //agregar transportadora al select fin
+           
     });
     /* registro del formulario */
     $('#formulario').on('submit', function(e){
         e.preventDefault();
         var formulario = $('#formulario')[0];
         var formData = new FormData(formulario);
-        var url = "{{route('productos/guardar')}}"; 
+        var url = "{{route('vehiculos/guardar')}}"; 
         var token = $("#token").val();
        
         $.ajax({                        
@@ -83,7 +93,7 @@
                 {
                     console.log("guardo exitosamente");
                     
-                    toastr.success( 'Producto Agregado', 'Exito',{
+                    toastr.success( 'Vehiculo Agregado', 'Exito',{
                     "positionClass": "toast-top-right"})
                 }  
                 $("#reiniciar").trigger('click')         
@@ -98,7 +108,7 @@
                     "positionClass": "toast-top-right",
                     "extendedTimeOut": "6000"})   
                 });
-                /* console.log(data.responseJSON.errors.remitente); */
+                console.log(data.responseJSON.errors);
                 /* $("#error").html(data.responseJSON.errors.remitente); */   
             }
         }); 
@@ -106,12 +116,5 @@
     });
     /* codigo de registro */
     
-   
-   
-   
-
-        
-   
-   
 </script>
 @endsection

@@ -25,7 +25,7 @@
                     <div class="col-lg-3">
                         @include('admin/productos/includes/boton_regresar')
                     </div>
-                    <h3 class="box-title">Registro de Productos</h3>  
+                    <h3 class="box-title"><strong>Registro de Productos</strong> </h3>  
                 </div>
             <!-- /.box-tittle -->
             <!-- box-body -->

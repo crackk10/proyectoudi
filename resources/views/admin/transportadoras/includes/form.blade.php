@@ -39,7 +39,7 @@
         <label for="id_estado" class="col-lg-2 control-label requerido">Estado</label>
         <div class="col-lg-3">
             <select class="form-control " id="id_estado" name="id_estado" >
-                <option value="" disabled selected>Seleccione un area</option>
+                <option value="" disabled selected>Seleccion...</option>
                 <option value="1">activo</option>
                 <option value="2">inactivo</option>
             </select>

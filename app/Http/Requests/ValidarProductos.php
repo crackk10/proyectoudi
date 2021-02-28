@@ -30,17 +30,19 @@ class ValidarProductos extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required',
+            'nombre'=>'required|max:40',
             'valor'=>'required',
-            'descripcion' => 'required',
+            'descripcion' => 'required|max200',
             //
         ];
     }
     public function messages(){
         return [
             'nombre.required'=>'El campo nombre es obligatorio',
+            'nombre.max'=>'El campo nombre solo soporta 40 caracteres',
             'valor.required'=>'El campo valor es obligatorio',
             'descripcion.required'=>'El campo descripcion valor es obligatorio',
+            'descripcion.required'=>'El campo descripcion solo soporta 200 caracteres',
         ];
     }
 }

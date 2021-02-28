@@ -33,10 +33,11 @@
     <thead>
       <tr>
         <th scope="col" class="angosto">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Precio</th>
-        <th scope="col">Descripcion</th>
-        <th scope="col">Accion</th>
+        <th scope="col">Transportadora</th>
+        <th scope="col">Placa</th>
+        <th scope="col">Remolque</th>
+        <th scope="col">Capacidad</th>
+        <th scope="col">email</th>
       </tr>
     </thead>
     <tbody>
@@ -47,12 +48,13 @@
           <th scope="row">
             {{$item->id}}
           </th>        
-          <td>{{$item->nombre}}</td>
-          <td>{{$item->valor}}</td>
-          <td>{{$item->descripcion}}</td>
+          <td>{{$item->razon_social}}</td>
+          <td>{{$item->placa}}</td>
+          <td>{{$item->remolque}}</td>
+          <td>{{$item->capacidad}}</td>
           <td>   
             
-            <a href="{{route('productos/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">
+            <a href="{{route('vehiculos/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">
               <h4>
                   <i class="fa fa-edit"></i> 
               </h4>

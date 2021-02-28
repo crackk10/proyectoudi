@@ -38,6 +38,7 @@ Route::resource('productos', 'Admin\productosController')
 ])->middleware('auth');
 
 
+Route::get('vehiculos/transportadora','Admin\vehiculosController@transportadora')->name('vehiculos/transportadora');
 Route::get('vehiculos.listar{page?}','Admin\vehiculosController@listar')->name('vehiculos.listar');
 Route::resource('vehiculos', 'Admin\vehiculosController')
 ->only([

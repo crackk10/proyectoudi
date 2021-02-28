@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-    Editar
+    Editar Vehiculo
 @endsection
 
 @section('metadata')
@@ -38,15 +38,12 @@
                     </div>
                     {{-- /boton regresar --}}
                     <div class="col-lg-8 text-center">
-                        <h3 class="box-title">Editar Correspondencia</h3>
+                        <h3 class="box-title"><strong>Editar Vehiculo</strong></h3>
                     </div>
                     <?php
                         $id=0; 
-                        $area=0; 
-                        $documento=0;
                         $estado=0;
-                        $es_respuesta="No";
-                        $requiere_respuesta="No";
+                        
                     ?>
                     @foreach ($detalle as $item) 
 
@@ -74,33 +71,44 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <strong>nombre</strong>  
+                                    <strong>Transportadora</strong> 
                                 </th>
                                 <td>
-                                    <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{ $item->nombre}}">
+                                    <select class="form-control " id="id_transportadora" name="id_transportadora" >
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <strong>Placa</strong>  
+                                </th>
+                                <td>
+                                    <input  type="text" id="placa" name="placa" class="form-control"  value="{{ $item->placa}}">
                                 </td>
                             </tr>                            
                             <tr>
                                 <th>
-                                    <strong>Precio</strong>  
+                                    <strong>Remolque</strong>  
                                 </th>
                                 <td>
-                                    <input  type="number" id="valor" name="valor" class="form-control"  value="{{ $item->valor}}">
+                                    <input  type="text" id="remolque" name="remolque" class="form-control"  value="{{ $item->remolque}}">
                                 </td>
                             </tr>
-
-
                             <tr>
                                 <th>
-                                    <strong>descripcion</strong>  
+                                    <strong>Capacidad</strong>  
                                 </th>
                                 <td>
-                                    <textarea name="descripcion" id="observacines" class="form-control" cols="10" rows="3">{{ $item->descripcion}}</textarea>
+                                    <input  type="number" id="capacidad" name="capacidad" class="form-control"  value="{{ $item->capacidad}}">
                                 </td>
-                                
                             </tr>
+                        
+
+
                             <?php
                                 $id=$item->id; 
+                                $id_transportadora=$item->id_transportadora;
+                                $estado_transportadora=$item->id_estado;
                             ?>
                         
                         </table>
@@ -108,8 +116,8 @@
                         
                         <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
                     
-                    <a href="{{route("productos")}}" class="btn btn-primary">Cancelar</a>
-                        <input type="submit" value="Actualizar" class="btn btn-primary">
+                    <a href="{{route("vehiculos")}}" class="btn btn-primary">Cancelar</a>
+                    <input type="submit" value="Actualizar" class="btn btn-primary">
                     
                     
                     
@@ -132,19 +140,47 @@
 </div>  
 
 
-@include('admin/productos/includes/modalConfirmDelet')
+@include('admin/transportadoras/includes/modalConfirmDelet')
 
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script>
     $(document).on('ready',function(){
+           //agregar transportadora al select
+            $.ajax({
+            type: "get",
+            url: "{{route('vehiculos/transportadora')}}",
+            data: "formdata",
+            dataType: "json",
+            success: function (data) {
+                $('#id_transportadora').html('');
+                $.each(data, function (indexInArray, valueOfElement) { 
+                    if (valueOfElement.id_estado!=2) {
+                         $("#id_transportadora").append("<option value="+valueOfElement.id+">"+valueOfElement.razon_social+"</option>"); 
+                    /* console.log(valueOfElement.id_estado) */
+                    }
+                }); 
+            //seleccionar la transportadora     
+            $("#id_transportadora option[value="+{{$id_transportadora}}+"]").prop('selected', true); 
+            //seleccionar la transportadora 
+            }
+            });
 
-       
-       });              
+        //alerta de contrato con la transportadora
+            if ({{$estado_transportadora}}!=1) {
+                toastr.warning( 'La transportadora actual del vehiculo esta inactiva', 'Advertencia',{
+                    "positionClass": "toast-top-right"});
+                    $("#cerrarModal").trigger('click');
+            } 
+        //alerta de contrato con la transportadora fin     
+        
+        //agregar transportadora al select fin
+        
+    });              
     $('#formulario').on('submit', function(e){
             e.preventDefault();
             
-            var url = "{{route('productos/actualizar',$id)}}";
+            var url = "{{route('vehiculos/actualizar',$id)}}";
             var token = $("#token").val();
             
             $.ajax({                        
@@ -158,10 +194,10 @@
                     {
                         console.log("Actualizado exitosamente");
 
-                        toastr.success( 'Producto Actualizado', 'Exito',{
+                        toastr.success( 'Vehiculo Actualizado', 'Exito',{
                         "positionClass": "toast-top-right"});
 
-                        setTimeout("location.href='{{route('productos')}}'",2000);  
+                        setTimeout("location.href='{{route('vehiculos')}}'",2000);  
                     }  
                              
                 },
@@ -183,7 +219,7 @@
         });
     $('#confirmar').on('click', function(){
         
-        var url = "{{route('productos/eliminar',$id)}}";
+        var url = "{{route('vehiculos/eliminar',$id)}}";
         var token = $("#token").val();
         
         $.ajax({                        
@@ -195,10 +231,10 @@
             {   if (data.success=='true') 
                 {   
                     console.log("Eliminado exitosamente");
-                    toastr.success( 'Producto Eliminado', 'Exito',{
+                    toastr.success( 'Vehiculo Eliminado', 'Exito',{
                     "positionClass": "toast-top-right"});
                     $("#cerrarModal").trigger('click');
-                    setTimeout("location.href='{{route('productos')}}'",2000);  
+                    setTimeout("location.href='{{route('vehiculos')}}'",2000);  
                 }
             },
             error: function (data)

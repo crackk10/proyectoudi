@@ -18,7 +18,7 @@ class CreateVehiculosTable extends Migration
             $table->unsignedBigInteger('id_transportadora');
             $table->foreign('id_transportadora','fk_vehiculos_transportadoras')->references('id')->on('transportadora')->onDelete('restrict')->onUpdate('restrict');
             $table->string('placa',10);
-            $table->string('remolque',10);
+            $table->string('remolque',30);
             $table->float('capacidad', 16, 3); 
             $table->timestamps();
             $table->charset = 'utf8mb4';

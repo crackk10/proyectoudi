@@ -1,25 +1,39 @@
-
-
-<!-- campo nombre y precio-->
+<!-- campo placa y transportadora -->
     <div class="form-group">
-        <label for="nombre" class="col-lg-3 control-label requerido">Producto</label>
+        <label for="placa" class="col-lg-3 control-label requerido">Placa</label>
         <div class="col-lg-3">
-        <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{old('nombre')}}" >
+        <input  type="text" id="placa" name="placa" class="form-control"  value="{{old('placa')}}" >
         </div>
 
-        <label for="valor" class="col-lg-2 control-label requerido">Precio</label>
+    <!-- campo transportadora -->
+        <label for="id_transportadora" class="col-lg-2 control-label requerido">Transportadora</label>
         <div class="col-lg-3">
-        <input  type="number" id="valor" name="valor" class="form-control"  value="{{old('valor')}}" >
+            <select class="form-control " id="id_transportadora" name="id_transportadora" >
+                <option value="" disabled selected>Seleccion...</option>
+                
+            </select>
         </div>
+    <!-- /campo transportadora -->
+
     </div>
-<!-- /campo nombre y precio-->
-<!-- campo descripcions -->
+<!-- /campo placa y transportadora -->
+
+
+<!-- campo Remolque y Capacidad -->
     <div class="form-group">
-        <label for="descripcion" class="col-lg-3 control-label ">Descripcion</label>
-        <div class="col-lg-8">
-            <textarea name="descripcion" id="descripcion" class="form-control" cols="10" rows="3"  value="{{old('descripcion')}}"></textarea>
+        <label for="remolque" class="col-lg-3 control-label requerido">Remolque</label>
+        <div class="col-lg-3">
+        <input  type="text" id="remolque" name="remolque" class="form-control"  value="{{old('remolque')}}" >
         </div>
-    </div>    
-<!-- /campo descripcions -->
+
+        <label for="capacidad" class="col-lg-2 control-label requerido">Capacidad</label>
+        <div class="col-lg-3">
+        <input  type="number" id="capacidad" name="capacidad" class="form-control"  value="{{old('capacidad')}}" >
+        </div>
+
+    </div>
+<!-- /campo Remolque y Capacidad -->
+
+
 <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
 

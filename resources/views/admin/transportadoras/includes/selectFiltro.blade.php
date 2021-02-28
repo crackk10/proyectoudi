@@ -1,4 +1,7 @@
 <div class="form-group">
+    <div class=" col-lg-4">
+        <h3 class="box-title"><strong>Lista de Transportadoras</strong> </h3>  
+    </div>
     <form id="formulario" method="get" autocomplete="off">
             <div class="form-group col-lg-4">
                 <label for="filtro" class="control-label col-lg-3">Filtro</label>

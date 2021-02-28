@@ -38,7 +38,7 @@
                     </div>
                     {{-- /boton regresar --}}
                     <div class="col-lg-8 text-center">
-                        <h3 class="box-title">Editar Producto</h3>
+                        <h3 class="box-title"><strong>Editar Producto</strong> </h3>
                     </div>
                     <?php
                         $id=0; 

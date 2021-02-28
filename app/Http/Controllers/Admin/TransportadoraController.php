@@ -170,8 +170,5 @@ class TransportadoraController extends Controller
         }else{
             return back();
         }
-
-        
-
     } 
 }

@@ -1,6 +1,6 @@
 @extends("theme.$theme.layout")
 @section('titulo')
-Correspondencia de Entrada
+Vehiculos
 @endsection
 
 @section('contenido')
@@ -11,7 +11,7 @@ Correspondencia de Entrada
         <div class="box box-danger">
             <!-- box-tittle -->
                 <div class="box-header with-border">
-                    <div class="col-lg-12"> @include('admin/productos/includes/selectFiltro')</div>
+                    <div class="col-lg-12"> @include('admin/vehiculos/includes/selectFiltro')</div>
                     
                 </div>
             <!-- /.box-tittle -->  
@@ -25,7 +25,7 @@ Correspondencia de Entrada
                     <div class="col-lg-6">
                     @auth
                         @if ( auth()->user()->tipo_usuario=="2")
-                            <a class="btn btn-primary"href="{{route('productos.crear')}}">Nuevo Producto</a>   
+                            <a class="btn btn-primary"href="{{route('vehiculos.crear')}}">Nuevo Vehiculo</a>   
                         @endif
                     @endauth
                     
@@ -47,7 +47,7 @@ Correspondencia de Entrada
     });
     /* buscar */
     $("#buscar").keyup(function (evento) {
-        var url = "{{route('productos.listar')}}";
+        var url = "{{route('vehiculos.listar')}}";
         $.ajax({
             type: "get",
             url: url,
@@ -58,9 +58,9 @@ Correspondencia de Entrada
             },
         });
     });
-    /* cambio de area */
+    /* filtro */
     $('#filtro').on('change',function(){   
-        var url = "{{route('productos.listar')}}";                                 
+        var url = "{{route('vehiculos.listar')}}";                                 
         $.ajax({                        
                 type: "get",                 
                 url: url,                    
