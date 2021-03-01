@@ -105,7 +105,7 @@ class TransportadoraController extends Controller
      * @param  \App\Models\Transportadora  $transportadora
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transportadora $transportadora)
+    public function update(ValidarTransportadora $request, Transportadora $transportadora)
     {
         //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){

@@ -29,8 +29,8 @@ class ValidarTransportadora extends FormRequest
     {
         return [
             'razon_social'=>'required|max:50',
-            'nit'=>'required|numeric|max:30',
-            'telefono' => 'required|numeric|max:15',
+            'nit'=>'required|numeric|max:999999999999',
+            'telefono' => 'required|numeric|max:999999999999',
             'id_estado' => 'required|numeric',
             //
         ];

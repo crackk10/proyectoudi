@@ -32,7 +32,7 @@ class ValidarProductos extends FormRequest
         return [
             'nombre'=>'required|max:40',
             'valor'=>'required',
-            'descripcion' => 'required|max200',
+            'descripcion' => 'required|max:200',
             //
         ];
     }

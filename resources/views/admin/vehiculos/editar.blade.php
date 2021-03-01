@@ -146,77 +146,78 @@
 
 <script>
     $(document).on('ready',function(){
-           //agregar transportadora al select
-            $.ajax({
-            type: "get",
-            url: "{{route('vehiculos/transportadora')}}",
-            data: "formdata",
-            dataType: "json",
-            success: function (data) {
-                $('#id_transportadora').html('');
-                $.each(data, function (indexInArray, valueOfElement) { 
-                    if (valueOfElement.id_estado!=2) {
-                         $("#id_transportadora").append("<option value="+valueOfElement.id+">"+valueOfElement.razon_social+"</option>"); 
-                    /* console.log(valueOfElement.id_estado) */
-                    }
-                }); 
-            //seleccionar la transportadora     
-            $("#id_transportadora option[value="+{{$id_transportadora}}+"]").prop('selected', true); 
-            //seleccionar la transportadora 
-            }
-            });
-
-        //alerta de contrato con la transportadora
-            if ({{$estado_transportadora}}!=1) {
-                toastr.warning( 'La transportadora actual del vehiculo esta inactiva', 'Advertencia',{
-                    "positionClass": "toast-top-right"});
-                    $("#cerrarModal").trigger('click');
-            } 
-        //alerta de contrato con la transportadora fin     
-        
-        //agregar transportadora al select fin
-        
-    });              
-    $('#formulario').on('submit', function(e){
-            e.preventDefault();
-            
-            var url = "{{route('vehiculos/actualizar',$id)}}";
-            var token = $("#token").val();
-            
-            $.ajax({                        
-                type: "PUT",
-                headers: {'X-CSRF-TOKEN':token},                
-                url: url, 
-                dataType: 'json',                   
-                data: $("#formulario").serialize(),
-                success: function(data)            
-                {   if (data.success=='true') 
-                    {
-                        console.log("Actualizado exitosamente");
-
-                        toastr.success( 'Vehiculo Actualizado', 'Exito',{
-                        "positionClass": "toast-top-right"});
-
-                        setTimeout("location.href='{{route('vehiculos')}}'",2000);  
-                    }  
-                             
-                },
-                error: function (data)
-                {  
-                    console.log("Error al Actualizar"); 
-                    $("#list").empty();
-                    var messages = data.responseJSON.errors;
-                    
-                        toastr.error( 'Problema al Actualizar',"error", {
-                        "positionClass": "toast-top-right",
-                        "extendedTimeOut": "6000"}); 
-                    
-                    /* console.log(data.responseJSON); */
-                    /* $("#error").html(data.responseJSON.errors.remitente); */  
+      //agregar transportadora al select
+        $.ajax({
+        type: "get",
+        url: "{{route('vehiculos/transportadora')}}",
+        data: "formdata",
+        dataType: "json",
+        success: function (data) {
+            $('#id_transportadora').html('');
+            $.each(data, function (indexInArray, valueOfElement) { 
+                if (valueOfElement.id_estado!=2) {
+                        $("#id_transportadora").append("<option value="+valueOfElement.id+">"+valueOfElement.razon_social+"</option>"); 
+                /* console.log(valueOfElement.id_estado) */
                 }
             }); 
-                
+       
+       //seleccionar la transportadora     
+        $("#id_transportadora option[value="+{{$id_transportadora}}+"]").prop('selected', true); 
+       //seleccionar la transportadora 
+        }
         });
+      //agregar transportadora al select fin
+
+      //alerta de contrato con la transportadora
+        if ({{$estado_transportadora}}!=1) {
+            toastr.warning( 'La transportadora actual del vehiculo esta inactiva', 'Advertencia',{
+                "positionClass": "toast-top-right"});
+                $("#cerrarModal").trigger('click');
+        } 
+      //alerta de contrato con la transportadora fin     
+    
+    });              
+    $('#formulario').on('submit', function(e){
+        e.preventDefault();
+        
+        var url = "{{route('vehiculos/actualizar',$id)}}";
+        var token = $("#token").val();
+        
+        $.ajax({                        
+            type: "PUT",
+            headers: {'X-CSRF-TOKEN':token},                
+            url: url, 
+            dataType: 'json',                   
+            data: $("#formulario").serialize(),
+            success: function(data)            
+            {   if (data.success=='true') 
+                {
+                    console.log("Actualizado exitosamente");
+
+                    toastr.success( 'Vehiculo Actualizado', 'Exito',{
+                    "positionClass": "toast-top-right"});
+
+                    setTimeout("location.href='{{route('vehiculos')}}'",2000);  
+                }  
+                            
+            },
+            error: function (data)
+            {  
+                console.log("Error al Actualizar"); 
+                $("#list").val('');
+                var messages = data.responseJSON.errors;
+                $.each(messages, function(index, val) {
+                toastr.error( val, 'Problema al Actualizar',{
+                "positionClass": "toast-top-right",
+                "extendedTimeOut": "6000"})   
+                });
+                
+                /* console.log(data.responseJSON); */
+                /* $("#error").html(data.responseJSON.errors.remitente); */  
+            }
+        }); 
+                
+    });
     $('#confirmar').on('click', function(){
         
         var url = "{{route('vehiculos/eliminar',$id)}}";

@@ -191,12 +191,13 @@
                 error: function (data)
                 {  
                     console.log("Error al Actualizar"); 
-                    $("#list").empty();
+                    $("#list").val('');
                     var messages = data.responseJSON.errors;
-                    
-                        toastr.error( 'Problema al Actualizar',"error", {
-                        "positionClass": "toast-top-right",
-                        "extendedTimeOut": "6000"}); 
+                    $.each(messages, function(index, val) {
+                    toastr.error( val, 'Problema al Actualizar',{
+                    "positionClass": "toast-top-right",
+                    "extendedTimeOut": "6000"})   
+                }); 
                     
                     /* console.log(data.responseJSON); */
                     /* $("#error").html(data.responseJSON.errors.remitente); */  

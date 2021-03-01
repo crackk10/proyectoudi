@@ -107,7 +107,7 @@ class VehiculosController extends Controller
      * @param  \App\Models\Vehiculo  $vehiculo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vehiculo $vehiculo)
+    public function update(ValidarVehiculos $request, Vehiculo $vehiculo)
     {
         //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
