@@ -94,7 +94,7 @@ class ProductosController extends Controller
         }
      
         
-       return view('admin/productos/detalle',compact('detalle'));
+      
     }
 
     /**

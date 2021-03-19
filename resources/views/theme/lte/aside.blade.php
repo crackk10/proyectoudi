@@ -38,8 +38,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('productos')}}"><i class="fa fa-circle-o"></i>Productos</a></li>
-            <li><a href="{{route('transportadoras')}}"><i class="fa fa-circle-o"></i>Transportadoras</a></li>
             <li><a href="{{route('vehiculos')}}"><i class="fa fa-circle-o"></i>Vehiculos</a></li>
+            <li><a href="{{route('conductores')}}"><i class="fa fa-circle-o"></i>Conductores</a></li>
+            <li><a href="{{route('transportadoras')}}"><i class="fa fa-circle-o"></i>Transportadoras</a></li>
           </ul>
         </li>
  

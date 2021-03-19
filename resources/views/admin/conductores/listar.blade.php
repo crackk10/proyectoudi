@@ -34,9 +34,10 @@
       <tr>
         <th scope="col" class="angosto">#</th>
         <th scope="col">Transportadora</th>
-        <th scope="col">Placa</th>
-        <th scope="col">Remolque</th>
-        <th scope="col">Capacidad</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Documento</th>
+        <th scope="col">Estado</th>
         <th scope="col">Accion</th>
       </tr>
     </thead>
@@ -49,12 +50,13 @@
             {{$item->id}}
           </th>        
           <td>{{$item->razon_social}}</td>
-          <td>{{$item->placa}}</td>
-          <td>{{$item->remolque}}</td>
-          <td>{{$item->capacidad}}</td>
+          <td>{{$item->nombre}}</td>
+          <td>{{$item->apellido}}</td>
+          <td>{{$item->documento}}</td>
+          <td>{{$item->nombre_estado}}</td>
           <td>   
             
-            <a href="{{route('vehiculos/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">
+            <a href="{{route('conductores/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">
               <h4>
                   <i class="fa fa-edit"></i> 
               </h4>

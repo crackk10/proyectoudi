@@ -85,19 +85,21 @@ class VehiculosController extends Controller
     public function edit(Vehiculo $vehiculo)
     {
         //
+        
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             $detalle= Vehiculo::select('transportadora.id_estado','vehiculo.*')
             ->from('vehiculo')
             ->join('transportadora','transportadora.id','=','vehiculo.id_transportadora')
             ->where('vehiculo.id','=',"$vehiculo->id")
             ->get();
+            
             return view('admin/vehiculos/editar',compact('detalle'));  
         }else{
             return back();
         }
      
         
-       return view('admin/vehiculos/detalle',compact('detalle'));
+       
     }
 
     /**

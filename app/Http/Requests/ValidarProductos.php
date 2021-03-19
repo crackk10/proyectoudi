@@ -42,7 +42,7 @@ class ValidarProductos extends FormRequest
             'nombre.max'=>'El campo nombre solo soporta 40 caracteres',
             'valor.required'=>'El campo valor es obligatorio',
             'descripcion.required'=>'El campo descripcion valor es obligatorio',
-            'descripcion.required'=>'El campo descripcion solo soporta 200 caracteres',
+            'descripcion.max'=>'El campo descripcion solo soporta 200 caracteres',
         ];
     }
 }

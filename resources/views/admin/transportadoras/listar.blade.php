@@ -55,7 +55,7 @@
           <td>{{$item->telefono}}</td>
           <td>{{$item->direccion}}</td>
           <td>{{$item->email}}</td>
-          <td>{{$item->nombre}}</td>
+          <td>{{$item->nombre_estado}}</td>
           <td>   
             
             <a href="{{route('transportadoras/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">

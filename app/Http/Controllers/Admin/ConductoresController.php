@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidarTransportadora;
+use App\Http\Requests\ValidarConductores;
+use App\Models\Conductor;
 use App\Models\Transportadora;
 use Illuminate\Http\Request;
 
-class TransportadoraController extends Controller
+class ConductoresController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,7 @@ class TransportadoraController extends Controller
     public function index()
     {
         //
-        return view('admin/transportadoras/index');
+        return view('admin/conductores/index');
     }
 
     /**
@@ -29,7 +30,7 @@ class TransportadoraController extends Controller
     {
         //
         if ( auth()->user()->tipo_usuario=="2"&&  auth()->user()->id_estado=="1" ){
-            return view('admin/transportadoras/crear');
+            return view('admin/conductores/crear');
         }else{
             return back();
         }
@@ -41,20 +42,24 @@ class TransportadoraController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidarTransportadora $request)
+    public function store(ValidarConductores $request)
     {
+        //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) { 
-                $transportadora = new Transportadora();
-                $transportadora->razon_social = $request->razon_social;
-                $transportadora->nit = $request->nit;
-                $transportadora->telefono = $request->telefono;
-                $transportadora->direccion = $request->direccion;
-                $transportadora->email = $request->email;
-                $transportadora->id_estado = $request->id_estado;
-                $transportadora->save();
+                $conductor = new Conductor();
+                $conductor->id_transportadora = $request->id_transportadora;
+                $conductor->id_estado_conductor = $request->id_estado_conductor;
+                $conductor->apellido = $request->apellido;
+                $conductor->nombre = $request->nombre;
+                $conductor->tipo_documento = $request->tipo_documento;
+                $conductor->documento = $request->documento;
+                $conductor->telefono = $request->telefono;
+                $conductor->email = $request->email;
+                $conductor->tipo_licencia = $request->tipo_licencia;
+                $conductor->save();
 
-                if ($transportadora->save()) {
+                if ($conductor->save()) {
                     return response()->json(['success'=>'true']);
                 }else { 
                     return response()->json(['success'=>'false']);
@@ -63,15 +68,16 @@ class TransportadoraController extends Controller
                 return back();
             }
         }
+        
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Transportadora  $transportadora
+     * @param  \App\Models\Conductor  $conductor
      * @return \Illuminate\Http\Response
      */
-    public function show(Transportadora $transportadora)
+    public function show(Conductor $conductor)
     {
         //
     }
@@ -79,38 +85,41 @@ class TransportadoraController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transportadora  $transportadora
+     * @param  \App\Models\Conductor  $conductor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transportadora $transportadora)
+    public function edit($conductor)
     {
+        //
+        
+        
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
-            $detalle= Transportadora::select()
-            ->from('transportadora')
-            ->where('transportadora.id','=',"$transportadora->id")
+            $detalle= Conductor::select('transportadora.id_estado','conductor.*')
+            ->from('conductor')
+            ->join('transportadora','transportadora.id','=','conductor.id_transportadora')
+            ->where('conductor.id','=',"$conductor")
             ->get();
-            return view('admin/transportadoras/editar',compact('detalle'));  
+            
+            return view('admin/conductores/editar',compact('detalle'));  
         }else{
             return back();
         }
-     
         
-       
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transportadora  $transportadora
+     * @param  \App\Models\Conductor  $conductor
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidarTransportadora $request, Transportadora $transportadora)
+    public function update(ValidarConductores $request, $conductor)
     {
         //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) {
-                  $registro=Transportadora::findOrFail($transportadora->id);
+                  $registro=Conductor::findOrFail($conductor);
                   $formulario=$request->all();
                   $resultado=$registro->fill($formulario)->save();   
                   if ($resultado) {
@@ -124,17 +133,21 @@ class TransportadoraController extends Controller
              }
     }
 
+
+    
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Transportadora  $transportadora
+     * @param  \App\Models\Conductor  $conductor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transportadora $transportadora)
+    public function destroy($conductor)
     {
         //
+        
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
-            $registro=Transportadora::findOrFail($transportadora->id);
+            $registro=Conductor::findOrFail($conductor);
             $resultado=$registro->delete();
             if ($resultado) {
             return response()->json(['success'=>'true']);
@@ -145,30 +158,40 @@ class TransportadoraController extends Controller
             return back();
         }
     }
+    //consulta para rellenar el select en la seccion Create
+    public function transportadora(Transportadora $transportadora)
+    {
+        $transportadora= Transportadora::select('id','razon_social','id_estado')
+        ->from('Transportadora')
+        ->get();
+        return response()->json($transportadora);
+    }
 
     public function listar(Request $request){
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){   
             if ($request->filtro!="0" && $request->buscar!="") {
-                $datos= Transportadora::select('estado.nombre_estado','transportadora.*')
+                $datos= Conductor::select('transportadora.razon_social','estado.nombre_estado','conductor.*')
                 ->orderBy('created_at','desc')
-                ->from('transportadora')
-                ->join('estado','estado.id','=','transportadora.id_estado')
+                ->from('conductor')
+                ->join('transportadora','transportadora.id','=','conductor.id_transportadora')
+                ->join('estado','estado.id','=','conductor.id_estado_conductor')
                 ->where([
                     ["$request->filtro",'LIKE',"$request->buscar%"]
                     ])
                 ->paginate(6);
-                return view('admin/transportadoras/listar')->with('datos',$datos);
+                return view('admin/conductores/listar')->with('datos',$datos);
             }else
             {
-                $datos= Transportadora::select('estado.nombre_estado','transportadora.*')
+                $datos= Conductor::select('transportadora.razon_social','estado.nombre_estado','conductor.*')
                 ->orderBy('created_at','desc')
-                ->from('transportadora')
-                ->join('estado','estado.id','=','transportadora.id_estado')
+                ->from('conductor')
+                ->join('transportadora','transportadora.id','=','conductor.id_transportadora')
+                ->join('estado','estado.id','=','conductor.id_estado_conductor')
                 ->paginate(6);
-                return view('admin/transportadoras/listar')->with('datos',$datos);
+                return view('admin/conductores/listar')->with('datos',$datos);
             }
         }else{
             return back();
         }
-    } 
+    }
 }

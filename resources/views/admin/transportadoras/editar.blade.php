@@ -43,7 +43,6 @@
                     <?php
                         $id=0; 
                         $estado=0;
-                        
                     ?>
                     @foreach ($detalle as $item) 
 
@@ -162,7 +161,7 @@
 <script>
     $(document).on('ready',function(){
         $("#id_estado option[value="+{{$estado}}+"]").prop('selected', true);
-       
+        
        });              
     $('#formulario').on('submit', function(e){
             e.preventDefault();
