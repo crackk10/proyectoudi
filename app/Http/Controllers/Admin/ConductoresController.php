@@ -119,6 +119,7 @@ class ConductoresController extends Controller
         //
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) {
+              
                   $registro=Conductor::findOrFail($conductor);
                   $formulario=$request->all();
                   $resultado=$registro->fill($formulario)->save();   

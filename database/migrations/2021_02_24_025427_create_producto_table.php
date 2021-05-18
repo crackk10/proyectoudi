@@ -17,6 +17,8 @@ class CreateProductoTable extends Migration
             $table->id();
             $table->string('nombre', 40);
             $table->bigInteger('valor');
+            $table->unsignedBigInteger('id_estado');
+            $table->foreign('id_estado','fk_productos_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
             $table->string('descripcion', 200);
             $table->timestamps();
             $table->charset = 'utf8mb4';

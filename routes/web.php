@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/inicio', function () {
+   
+    return view('theme/lte/layout');
+})->name('inicio');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -93,3 +97,25 @@ Route::get('/home', 'HomeController@index')->name('home');
         
     ])->middleware('auth');
 /* rutas de transportadoras */
+
+/* rutas de calendario*/
+
+Route::get('calendario/evento','Admin\calendarioController@evento')->name('calendario/evento');
+Route::get('calendario/vehiculo','Admin\calendarioController@vehiculo')->name('calendario/vehiculo');
+Route::get('calendario/conductor','Admin\calendarioController@conductor')->name('calendario/conductor');
+Route::get('calendario.listar{page?}','Admin\calendarioController@listar')->name('calendario.listar');
+Route::resource('calendario', 'Admin\calendarioController')
+->only([
+    'index', 'create','store','show','edit','update','destroy',
+    ])
+    ->names([
+    'index' => 'calendario',
+    'create' => 'calendario.crear',
+    'store' => 'calendario/guardar',
+    'show' => 'calendario/detalle',
+    'edit' => 'calendario/editar',
+    'update' =>'calendario/actualizar',
+    'destroy' => 'calendario/eliminar',
+    
+])->middleware('auth');
+/* rutas de calentadio*/

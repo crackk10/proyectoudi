@@ -5,6 +5,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>@yield('titulo', 'Transportes')</title>
+
+  <!-- jQuery 3 -->
+  <script src="{{asset("assets/$theme/bower_components/jquery/dist/jquery.min.js")}}"></script>
+  
   @yield('metadata')
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -59,8 +63,7 @@
      <!--fin footer -->
 </div> 
 
-<!-- jQuery 3 -->
-<script src="{{asset("assets/$theme/bower_components/jquery/dist/jquery.min.js")}}"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset("assets/$theme/bower_components/bootstrap/dist/js/bootstrap.min.js")}}"></script>
 <!-- SlimScroll -->

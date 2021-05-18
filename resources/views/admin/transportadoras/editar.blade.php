@@ -162,13 +162,11 @@
     $(document).on('ready',function(){
         $("#id_estado option[value="+{{$estado}}+"]").prop('selected', true);
         
-       });              
+    });              
     $('#formulario').on('submit', function(e){
             e.preventDefault();
-            
             var url = "{{route('transportadoras/actualizar',$id)}}";
             var token = $("#token").val();
-            
             $.ajax({                        
                 type: "PUT",
                 headers: {'X-CSRF-TOKEN':token},                
@@ -220,21 +218,16 @@
                     console.log("Eliminado exitosamente");
                     toastr.success( 'Transportadora Eliminada', 'Exito',{
                     "positionClass": "toast-top-right"});
-                    $("#cerrarModal").trigger('click');
+                    $("#cerrarModal").trigger('click');   
                     setTimeout("location.href='{{route('transportadoras')}}'",2000);  
                 }
             },
             error: function (data)
             {  
                 console.log("Error al Eliminar"); 
-                
-
-                    toastr.error( 'Problema al Eliminar',"Error", {
-                    "positionClass": "toast-top-right",
-                    "extendedTimeOut": "6000"}) 
-               
-                /* console.log(data.responseJSON); */
-                /* $("#error").html(data.responseJSON.errors.remitente); */  
+                toastr.error( 'Problema al Eliminar',"Error", {
+                "positionClass": "toast-top-right",
+                "extendedTimeOut": "6000"}) 
             }
         }); 
             

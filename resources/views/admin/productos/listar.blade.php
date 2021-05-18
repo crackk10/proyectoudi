@@ -36,7 +36,9 @@
         <th scope="col">Nombre</th>
         <th scope="col">Precio</th>
         <th scope="col">Descripcion</th>
+        <th scope="col">Estado</th>
         <th scope="col">Accion</th>
+        
       </tr>
     </thead>
     <tbody>
@@ -50,6 +52,7 @@
           <td>{{$item->nombre}}</td>
           <td>{{$item->valor}}</td>
           <td>{{$item->descripcion}}</td>
+          <td>{{$item->nombre_estado}}</td>
           <td>   
             
             <a href="{{route('productos/editar',$item->id)}}" style = "float: left" class="btn btn-default btn-xs">

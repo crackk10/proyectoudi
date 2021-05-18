@@ -65,54 +65,15 @@
             <!-- box-body -->
                 <div class="box-body">
                    <form id="formulario">
-                        <table class="table table-hover">
-                            <tr class="col-sm">
-                                <th>
-                                    <strong>Codigo</strong>
-                                </th>
-                                <td>{{ $item->id }}</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <strong>nombre</strong>  
-                                </th>
-                                <td>
-                                    <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{ $item->nombre}}">
-                                </td>
-                            </tr>                            
-                            <tr>
-                                <th>
-                                    <strong>Precio</strong>  
-                                </th>
-                                <td>
-                                    <input  type="number" id="valor" name="valor" class="form-control"  value="{{ $item->valor}}">
-                                </td>
-                            </tr>
 
-
-                            <tr>
-                                <th>
-                                    <strong>descripcion</strong>  
-                                </th>
-                                <td>
-                                    <textarea name="descripcion" id="observacines" class="form-control" cols="10" rows="3">{{ $item->descripcion}}</textarea>
-                                </td>
-                                
-                            </tr>
-                            <?php
-                                $id=$item->id; 
-                            ?>
-                        
-                        </table>
-                        
-                        
+                        @include('admin/productos/includes/tablaEditar')
                         <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
-                    
-                    <a href="{{route("productos")}}" class="btn btn-primary">Cancelar</a>
+                        <a href="{{route("productos")}}" class="btn btn-primary">Cancelar</a>
                         <input type="submit" value="Actualizar" class="btn btn-primary">
-                    
-                    
-                    
+                        <?php
+                        $id=$item->id; 
+                        $id_estado=$item->id_estado;
+                        ?>
                     </form>
                     @endforeach
                 </div>
@@ -138,9 +99,9 @@
 
 <script>
     $(document).on('ready',function(){
-
+        $("#id_estado option[value="+{{$id_estado}}+"]").prop('selected', true); 
        
-       });              
+    });              
     $('#formulario').on('submit', function(e){
             e.preventDefault();
             

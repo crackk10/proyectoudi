@@ -16,7 +16,8 @@ class CreateProcesoTable extends Migration
         Schema::create('proceso', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 40);
-            $table->dateTime('fecha', $precision = 0);
+            $table->unsignedBigInteger('id_estado');
+            $table->foreign('id_estado','fk_proceso_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

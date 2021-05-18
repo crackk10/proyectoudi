@@ -50,13 +50,13 @@ class ValidarConductores extends FormRequest
             'tipo_documento.max'=>'El campo tipo de documento solo soporta 4 caracteres',
             'documento.required'=>'El campo  documento es obligatorio',
             'documento.max'=>'El campo documento solo soporta 15 caracteres',
-            'documento.max'=>'El campo documento solo soporta caracteres numericos',
+            'documento.numeric'=>'El campo documento solo soporta caracteres numericos',
             'tipo_licencia.required'=>'El campo tipo de licencia es obligatorio',
             'tipo_licencia.max'=>'El campo tipo de licencia solo soporta 10 caracteres',
             'id_estado_conductor.required'=>'El campo Estado es obligatorio',
             'telefono.required'=>'El campo  telefono es obligatorio',
             'telefono.max'=>'El campo telefono solo soporta 15 caracteres',
-            'telefono.max'=>'El campo telefono solo soporta caracteres numericos',
+            'telefono.numeric'=>'El campo telefono solo soporta caracteres numericos',
             'id_transportadora.required'=>'El campo transportadora valor es obligatorio',
             
         ];

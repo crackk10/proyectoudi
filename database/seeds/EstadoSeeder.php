@@ -14,10 +14,13 @@ class EstadoSeeder extends Seeder
         $estados = [
             'Activo',
             'Inactivo',
+            'En espera',
+            'Realizado',
+            'Anulado',
         ];
         foreach($estados as $key => $value){
             DB::table('estado')->insert([
-                'nombre' => $value,
+                'nombre_estado' => $value,
                 
             ]);
         }

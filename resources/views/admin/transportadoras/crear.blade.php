@@ -79,7 +79,7 @@
                     toastr.success( 'Transportadora Agregada', 'Exito',{
                     "positionClass": "toast-top-right"})
                 }  
-                $("#reiniciar").trigger('click')         
+                $("#cerrarModal").trigger('click')         
             },
             error: function (data)
             {  

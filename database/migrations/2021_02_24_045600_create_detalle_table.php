@@ -15,8 +15,9 @@ class CreateDetalleTable extends Migration
     {
         Schema::create('detalle', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_movimiento');
-            $table->foreign('id_movimiento','fk_detalle_movimiento')->references('id')->on('movimiento')->onDelete('restrict')->onUpdate('restrict');
+            $table->dateTime('fecha', $precision = 0);
+            $table->unsignedBigInteger('id_calendario');
+            $table->foreign('id_calendario','fk_detalle_calendario')->references('id')->on('calendario')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('id_proceso');
             $table->foreign('id_proceso','fk_detalle_proceso')->references('id')->on('proceso')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('id_producto');

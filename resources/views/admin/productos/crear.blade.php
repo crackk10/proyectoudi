@@ -86,7 +86,7 @@
                     toastr.success( 'Producto Agregado', 'Exito',{
                     "positionClass": "toast-top-right"})
                 }  
-                $("#reiniciar").trigger('click')         
+                $("#cerrarModal").trigger('click')         
             },
             error: function (data)
             {  

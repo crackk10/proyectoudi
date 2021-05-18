@@ -4,7 +4,7 @@
 @endsection
 
 @section('metadata'){{-- estilos de plugin fileinput --}}
-    <meta name="csrf-token" content="{{csrf_token()}}"/>    
+    
 @endsection
 
 @section('scriptsPlugins')
@@ -93,11 +93,10 @@
             {   if (data.success=='true') 
                 {
                     console.log("guardo exitosamente");
-                    
                     toastr.success( 'Conductor Agregado', 'Exito',{
                     "positionClass": "toast-top-right"})
                 }  
-                $("#reiniciar").trigger('click')         
+                $("#cerrarModal").trigger('click')         
             },
             error: function (data)
             {  
@@ -112,8 +111,7 @@
                 console.log(data.responseJSON.errors);
                 /* $("#error").html(data.responseJSON.errors.remitente); */   
             }
-        }); 
-                
+        });        
     });
     /* codigo de registro */
     

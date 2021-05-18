@@ -49,6 +49,7 @@ class ProductosController extends Controller
                 $producto = new Producto();
                 $producto->nombre = $request->nombre;
                 $producto->valor = $request->valor;
+                $producto->id_estado = $request->id_estado;
                 $producto->descripcion = $request->descripcion;
                 $producto->save();
 
@@ -147,9 +148,10 @@ class ProductosController extends Controller
     public function listar(Request $request){
         if (auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1") {
             if ($request->filtro!="0" && $request->buscar!="") {
-                $datos= Producto::select()
+                $datos= Producto::select('estado.nombre_estado','producto.*')
                 ->orderBy('created_at','desc')
                 ->from('producto')
+                ->join('estado','estado.id','=','producto.id_estado')
                 ->where([
                             ["$request->filtro",'LIKE',"$request->buscar%"]
                         ])
@@ -157,9 +159,10 @@ class ProductosController extends Controller
                 return view('admin/productos/listar')->with('datos',$datos);
             }else
             {
-                $datos= Producto::select()
+                $datos= Producto::select('estado.nombre_estado','producto.*')
                 ->orderBy('created_at','desc')
                 ->from('producto')
+                ->join('estado','estado.id','=','producto.id_estado')
                 ->paginate(6);
                 return view('admin/productos/listar')->with('datos',$datos);
             } 

@@ -21,7 +21,7 @@ class CreateConductoresTable extends Migration
             $table->string('documento',15);
             $table->string('tipo_licencia',10);
             $table->unsignedBigInteger('id_estado_conductor');
-            $table->foreign('id_estado','fk_conductores_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('id_estado_conductor','fk_conductores_estado')->references('id')->on('estado')->onDelete('restrict')->onUpdate('restrict');
             $table->string('telefono',15);
             $table->string('email',50)->unique()->nullable();
             $table->unsignedBigInteger('id_transportadora');
