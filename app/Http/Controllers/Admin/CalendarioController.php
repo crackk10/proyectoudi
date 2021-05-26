@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarCalendario;
 use App\Models\Calendario;
 use App\Models\Conductor;
+use App\Models\Detalle;
+use App\Models\Proceso;
+use App\Models\Producto;
 use App\Models\Transportadora;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -45,7 +48,7 @@ class CalendarioController extends Controller
     public function store(ValidarCalendario $request)
     {
         //
-        if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
+        if ( auth()->user()->tipo_usuario=="2"||auth()->user()->tipo_usuario=="1"  &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) { 
                 $evento = new Calendario();
                 $evento->fecha = $request->fecha;
@@ -80,6 +83,7 @@ class CalendarioController extends Controller
     {
         //
         $DetalleEvento=Calendario::select()
+        
         ->from('calendario')
         ->where('calendario.id','=',"$calendario")
         ->get();
@@ -147,7 +151,7 @@ class CalendarioController extends Controller
     }
    
     public function listar(Request $request){
-        if ( auth()->user()->tipo_usuario=="2" ||auth()->user()->tipo_usuario=="1" &&  auth()->user()->id_estado=="1"){
+        
             $eventos= Calendario::select('conductor.nombre','conductor.apellido','vehiculo.placa','calendario.*')              
             ->from('calendario')
             ->join('conductor','conductor.id','=','calendario.id_conductor')
@@ -193,42 +197,175 @@ class CalendarioController extends Controller
                 $record->descripcion = $descripcion;
                 $record->start = $fecha;
                 $record->color = $color;
-            /* agrego los datos al arrayDAto parametro 1 = el array parametro 2 = el valor*/
+            /* agrego los datos al arrayDAto (parametro 1 = el array) (parametro 2 = el valor)*/
                 array_push($arrayDatos, $record);
                 
         }
-        }else{
-            return back();
-        }
+        
     
         return response()->json($arrayDatos);
     }
-        //consulta para rellenar el select en la seccion Create
-        public function vehiculo(Vehiculo $vehiculo)
-        {
-            $vehiculo= Vehiculo::select('vehiculo.id','placa','id_estado','razon_social')
-            ->from('vehiculo')
-            ->join('transportadora','transportadora.id','=','vehiculo.id_transportadora')
-            ->get();
-            return response()->json($vehiculo); 
-        }
-        public function conductor(Conductor $conductor)
-        {
-            $conductor= Conductor::select('conductor.id','nombre','apellido','id_estado_conductor','id_estado','razon_social')
-            ->from('conductor')
-            ->join('transportadora','transportadora.id','=','conductor.id_transportadora')
-            ->get();
-            return response()->json($conductor);
+    //consulta para rellenar el select en la seccion Create
+    public function vehiculo(Vehiculo $vehiculo)
+    {
+        $vehiculo= Vehiculo::select('vehiculo.id','placa','id_estado','razon_social')
+        ->from('vehiculo')
+        ->join('transportadora','transportadora.id','=','vehiculo.id_transportadora')
+        ->get();
+        return response()->json($vehiculo); 
+    }
+    public function conductor(Conductor $conductor)
+    {
+        $conductor= Conductor::select('conductor.id','nombre','apellido','id_estado_conductor','id_estado','razon_social')
+        ->from('conductor')
+        ->join('transportadora','transportadora.id','=','conductor.id_transportadora')
+        ->get();
+        return response()->json($conductor);
+        
+    }
+    public function producto(Producto $producto)
+    {
+        $producto= Producto::select()
+        ->from('producto')
+        ->get();
+        return response()->json($producto);
+        
+    }
+    public function proceso(Proceso $proceso)
+    {
+        $proceso= Proceso::select()
+        ->from('proceso')
+        ->get();
+        return response()->json($proceso);
+        
+    }
+    public function evento(Request $request)
+    {  
+        $Detalle= Calendario::select()
+        ->from('calendario')
+        ->where('calendario.id','=',$request->idEvento)
+        ->get();
+        return response()->json($Detalle);
+        
+    }
+    public function detallado(Request $request){
+        
+        $eventos= Calendario::select('estado.nombre_estado','conductor.nombre','conductor.apellido','vehiculo.placa','calendario.*')              
+        ->from('calendario')
+        ->join('conductor','conductor.id','=','calendario.id_conductor')
+        ->join('vehiculo','vehiculo.id','=','calendario.id_vehiculo')
+        ->join('estado','estado.id','=','calendario.id_estado')
+        ->get();
+
+
+        /* creo un objeto stdclass para almacenar los datos */
+        $arrayDatos = new stdClass();
+        $arrayDatos = array();
+        /* Recorro la consulta y creo las variables titulo y fecha para asignar el 
+        valor de los indices id,title,start y color */
+        foreach ($eventos as $datos){
+            $tipoDeMovimiento="";
+            if ($datos->tipo_movimiento==1) {
+                $tipoDeMovimiento="Entrada";
+            }
+            if ($datos->tipo_movimiento==2) {
+                $tipoDeMovimiento="Salida";
+            }
+            $id=$datos->id;
+            $titulo="Vehiculo : ".$datos->placa;
+            $evento ="
+            <table class='table table-hover col-lg-12'>
+                <tr>
+                    <th  scope='row'>
+                        sr(a)
+                    </th>
+                    <td colspan='3'>"
+                        .$datos->nombre." ".$datos->apellido.
+                    "</td>
+                </tr>
+                <tr>
+                    <th>
+                        Llegada
+                    </th>
+                    <td>"
+                        .$datos->fecha.
+                    "</td>
+                    <th>
+                        Salida
+                    </th>
+                    <td>"
+                        .$datos->fecha_salida.
+                    "</td>
+                </tr>
+                <tr>
+                    <th>
+                        Origen
+                    </th>
+                    <td>"
+                        .$datos->origen.
+                    "</td>
+                    <th>
+                        Destino
+                    </th>
+                    <td>"
+                        .$datos->destino.
+                    "</td>
+                </tr>
+                <tr>
+                    <th>
+                        Tipo
+                    </th>
+                    <td>"
+                        .$tipoDeMovimiento.
+                    "</td>
+                    <th>
+                        Estado
+                    </th>
+                    <td>"
+                        .$datos->nombre_estado.
+                    "</td>
+                </tr>
+
+                <tr>
+                    <th>
+                        comentarios
+                    </th>
+                    <td colspan='3'>"
+                    .$datos->comentario.
+                    "</td>
+                </tr>
+                <tr>
+                    <th colspan='4'  style='text-align: center'>
+                        Detalle
+                    </th>
+
+                </tr>
+            </table>
+            <div id='list' >
+             </div>";
+            $descripcion=$evento;
+        /* separo el contenido del campo fecha en dias y horas */
+            list($dia, $hora, ) = explode(" ", $datos->fecha);
+            $fecha=$dia."T".$hora;
+            $color=$datos->color;
+        /* creo un objeto stdclass para almacenar los datos y agregar cada uno al 
+            arrayDatos*/
+            $record = new stdClass();
+            $record->id = $id;
+            $record->title = $titulo;
+            $record->descripcion = $descripcion;
+            $record->start = $fecha;
+            $record->color = $color;
+        /* agrego los datos al arrayDAto (parametro 1 = el array) (parametro 2 = el valor)*/
+            array_push($arrayDatos, $record);
             
-        }
-        public function evento(Request $request)
-        {  
-            $Detalle= Calendario::select()
-            ->from('calendario')
-            ->where('calendario.id','=',$request->idEvento)
-            ->get();
-            return response()->json($Detalle);
-            
-        }
+    }
+        /* Agrego el detalle */
+  
+        
+
+    return response()->json($arrayDatos);
+}
+
 
 }

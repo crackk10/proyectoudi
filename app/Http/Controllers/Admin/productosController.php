@@ -47,7 +47,7 @@ class ProductosController extends Controller
         if ( auth()->user()->tipo_usuario=="2" &&  auth()->user()->id_estado=="1"){
             if ($request->ajax()) { 
                 $producto = new Producto();
-                $producto->nombre = $request->nombre;
+                $producto->nombre_producto = $request->nombre_producto;
                 $producto->valor = $request->valor;
                 $producto->id_estado = $request->id_estado;
                 $producto->descripcion = $request->descripcion;

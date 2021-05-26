@@ -8,7 +8,7 @@
                 <div class="col-lg-9">
                     <select name="filtro" id="filtro" class="form-control">
                         <option value="0">Sin filtro</option>
-                        <option value="nombre">Nombre del producto</option>
+                        <option value="nombre_producto">Nombre del producto</option>
                         <option value="id">codigo del producto</option>
                         
                     </select>

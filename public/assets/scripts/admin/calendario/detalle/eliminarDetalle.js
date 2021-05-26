@@ -1,6 +1,8 @@
-function crudEvento(formData,url,token,calendar,tipo) {
+function dropDetalle() {
+    var token = $("#token").val();
+    var url=url;
     $.ajax({                        
-        type: tipo,
+        type: 'DELETE',
         headers: {'X-CSRF-TOKEN':token},          
         url: url,
         dataType: 'json',                   
@@ -11,9 +13,7 @@ function crudEvento(formData,url,token,calendar,tipo) {
                 console.log("Exito");
                 toastr.success( 'Accion Realizada', 'Exito',{
                 "positionClass": "toast-top-right"})
-            }  
-            $("#cerrarModal").trigger('click')
-            calendar.refetchEvents();      
+            }               
         },
         error: function (data)
         {  

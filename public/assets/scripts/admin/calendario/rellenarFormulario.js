@@ -19,6 +19,11 @@ function rellenarFormulario(url,idEvento) {
           var fechadividida=data[0].fecha.split('.000000Z');//elimino una cadena de texto de la fecha
           var fechaStr=new String(fechadividida[0]);//convierto la matriz obtenida en un string
           $("#fecha").val(fechaStr);//agrego la fecha y hora al input
+          var fechadivididaA=data[0].fecha_salida.split(' ');//elimino una cadena de texto de la fecha
+          var hora =fechadivididaA[0];
+          var minutos= fechadivididaA[1];
+          var fechaStrA=new String(hora+"T"+minutos);//convierto la matriz obtenida en un string
+          $("#fecha_salida").val(fechaStrA);//agrego la fecha y hora al input
         }
       }); 
     

@@ -4,7 +4,7 @@
     <div class="form-group">
         <label for="nombre" class="col-lg-3 control-label requerido">Producto</label>
         <div class="col-lg-3">
-        <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{old('nombre')}}" >
+        <input  type="text" id="nombre" name="nombre_producto" class="form-control"  value="{{old('nombre_producto')}}" >
         </div>
 
         <label for="valor" class="col-lg-2 control-label requerido">Precio</label>

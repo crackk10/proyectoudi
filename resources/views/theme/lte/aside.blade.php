@@ -24,18 +24,10 @@
         @endif
         
         @if ( auth()->user()->tipo_usuario=="2" ||auth()->user()->tipo_usuario=="1" &&  auth()->user()->id_estado=="1")
-        <li class="treeview">
-          <a href="#">
+        <li >
+          <a href="{{route('calendario')}}">
             <i class="fa  fa-calendar"></i> <span>Programacion</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
           </a>
-          <ul class="treeview-menu">
-            <li><a href="{{route('calendario')}}"><i class="fa fa-circle-o"></i>Calendario</a></li>
-            {{-- <li><a href="../forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-            <li><a href="../forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>--}}
-          </ul> 
         </li>
         @endif
 

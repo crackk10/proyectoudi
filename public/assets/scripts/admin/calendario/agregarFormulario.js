@@ -20,6 +20,7 @@ function AgregarFormulario(fechaData,fechaCorta) {
       $('#selectEstado').css('display', 'none');//oculto el campo de estado
       $('#origenDestino').css('display', 'none');//oculto los campos origen y destino
       $('#salida').css('display', 'none');//oculto el campo fecha_salida
+      $('#btnRegistroEstados').css('display', 'none');//oculto el boton RegistroEstados
       $("#exampleModalCenter").modal(); 
     }
    

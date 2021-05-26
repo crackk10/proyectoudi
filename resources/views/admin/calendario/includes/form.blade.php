@@ -6,7 +6,7 @@
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </div>
-            <input  type="datetime-local" id="fecha" min="<?php echo date('Y-m-d\TH:i') ?>" name="fecha" class="form-control"  value="{{old('fecha')}}" >
+            <input  type="datetime-local" id="fecha" min="<?php echo date('Y-m-d\T00:00') ?>" name="fecha" class="form-control"  value="{{old('fecha')}}" >
         </div>
     </div>
    </div>
@@ -20,7 +20,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    <input  type="datetime-local" id="fecha_salida" min="<?php echo date('Y-m-d\TH:i') ?>" name="fecha_salida" class="form-control"  value="{{old('fecha_salida')}}" >
+                    <input  type="datetime-local" id="fecha_salida" min="<?php echo date('Y-m-d\T00:00') ?>" name="fecha_salida" class="form-control"  value="{{old('fecha_salida')}}" >
                 </div>
             </div>
         </div>
@@ -100,4 +100,11 @@
 <input type="hidden" name="color" value="#3498DB" id="color">
 <input type="hidden" name="_token" value="{{csrf_token()}}" id="token">
 <input type="hidden" name="id" value="" id="id">
+<div id="btnRegistroEstados"  style="visibility: visible">
+    <div class="form-group">
+        <div class="col-lg-4"></div>
+        <button id="estados" onclick="registroEstados(idEventoGlobal)" type="button" class="btn btn-info col-lg-6">Registrar Proceso</button>
+    </div>  
+</div>
+
 

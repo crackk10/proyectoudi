@@ -101,9 +101,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 /* rutas de calendario*/
 
 Route::get('calendario/evento','Admin\calendarioController@evento')->name('calendario/evento');
+Route::get('calendario/producto','Admin\calendarioController@producto')->name('calendario/producto');
+Route::get('calendario/proceso','Admin\calendarioController@proceso')->name('calendario/proceso');
 Route::get('calendario/vehiculo','Admin\calendarioController@vehiculo')->name('calendario/vehiculo');
 Route::get('calendario/conductor','Admin\calendarioController@conductor')->name('calendario/conductor');
 Route::get('calendario.listar{page?}','Admin\calendarioController@listar')->name('calendario.listar');
+Route::get('calendario.detallado{page?}','Admin\calendarioController@detallado')->name('calendario.detallado');
 Route::resource('calendario', 'Admin\calendarioController')
 ->only([
     'index', 'create','store','show','edit','update','destroy',
@@ -119,3 +122,20 @@ Route::resource('calendario', 'Admin\calendarioController')
     
 ])->middleware('auth');
 /* rutas de calentadio*/
+/* rutas de detalleEvento */
+Route::get('detalle/eliminar{page?}','Admin\detalleController@eliminar')->name('detalle/eliminar');
+Route::resource('detalle', 'Admin\detalleController')
+->only([
+    'index', 'create','store','show','edit','update','destroy',
+    ])
+    ->names([
+    'index' => 'detalle',
+    'create' => 'detalle.crear',
+    'store' => 'detalle/guardar',
+    'show' => 'detalle/detalle',
+    'edit' => 'detalle/editar',
+    'update' =>'detalle/actualizar',
+    'destroy' => 'detalle/eliminar',
+    
+]);
+/* rutas de detalleEvento */

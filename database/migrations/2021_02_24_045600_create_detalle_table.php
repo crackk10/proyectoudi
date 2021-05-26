@@ -22,7 +22,7 @@ class CreateDetalleTable extends Migration
             $table->foreign('id_proceso','fk_detalle_proceso')->references('id')->on('proceso')->onDelete('restrict')->onUpdate('restrict');
             $table->unsignedBigInteger('id_producto');
             $table->foreign('id_producto','fk_detalle_producto')->references('id')->on('producto')->onDelete('restrict')->onUpdate('restrict');
-            $table->Integer('cantidad_producto');
+            $table->Integer('peso');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -49,7 +49,7 @@
           <th scope="row">
             {{$item->id}}
           </th>        
-          <td>{{$item->nombre}}</td>
+          <td>{{$item->nombre_producto}}</td>
           <td>{{$item->valor}}</td>
           <td>{{$item->descripcion}}</td>
           <td>{{$item->nombre_estado}}</td>

@@ -10,7 +10,7 @@
             <strong>nombre</strong>  
         </th>
         <td>
-            <input  type="text" id="nombre" name="nombre" class="form-control"  value="{{ $item->nombre}}">
+            <input  type="text" id="nombre" name="nombre_producto" class="form-control"  value="{{ $item->nombre_producto}}">
         </td>
     </tr>                            
     <tr>

@@ -11,19 +11,30 @@
   <script src="{{asset("assets/FullCalendar/lib/locales-all.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/agregarVehiculo.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/agregarConductor.js")}}"></script> 
+  <script src="{{asset("assets/scripts/admin/calendario/agregarProducto.js")}}"></script> 
+  <script src="{{asset("assets/scripts/admin/calendario/agregarProceso.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/rellenarFormulario.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/agregarFormulario.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/crearEvento.js")}}"></script> 
   <script src="{{asset("assets/scripts/admin/calendario/cambioColor.js")}}"></script> 
-
+  <script src="{{asset("assets/scripts/admin/calendario/detalle/crudDetalle.js")}}"></script> 
+  <script src="{{asset("assets/scripts/admin/calendario/detalle/hola.js")}}"></script> 
+  <script src="{{asset("assets/scripts/anexGrid/jquery.anexgrid.js")}}"></script> 
+  <script src="{{asset("assets/scripts/admin/calendario/detalle/grillaDetalle.js")}}"></script> 
+  <script src="{{asset("assets/scripts/admin/calendario/detalle/addFormDetalle.js")}}"></script> 
+  
   
   <script>
-    var idEventoGlobal,calendar;
+  
+    var idEventoGlobal,calendar;//variables para crud
+    
+    
     document.addEventListener('DOMContentLoaded', function() {
-      //variables para desicion de actualizar y guardar id del evento
-      var desicion;
+      
       var calendarEl = document.getElementById('calendar');
       calendar = new FullCalendar.Calendar(calendarEl, {
+        fixedWeekCount:Boolean, default: false,
+        height: 520,
         /* botones del header */
         headerToolbar:{
         left: 'today prev,next', 
@@ -35,7 +46,7 @@
         hiddenDays: [ 0 ], //dias ocultos en el calendario (domingo)
        /* Accion cuando se da click a un evento (asignar titulo y cuerpo) */
         eventClick:function(eventData,jsEvent,view){         
-          console.log(eventData)
+          
           idEventoGlobal=eventData.event._def.publicId;//id del evento para actualizar o eliminar
           $('#headerModalEvento').css('background-color', eventData.event.backgroundColor);
           $("#tituloEvento").html(eventData.event._def.title);
@@ -45,7 +56,7 @@
           $("#exampleModalCenter").modal();
 
          /* Evento para editar */
-          $('#editar').on("click",function (e) {
+          $('#editar').click(function (e) {
             desicion = "editar";
             
             var urlVehiculos = "{{route('calendario/vehiculo')}}";
@@ -81,14 +92,13 @@
      //Realizar el registro 
       $('#formulario').on('submit', function (e) {
         e.preventDefault();
-        var tipo,formulario,formData,url,token;
+        var formulario;
         //Crear evento
         if (desicion =="registrar") {
-          tipo = "post"
+          tipo = "post";
           formulario = $('#formulario')[0];
           formData = $('#formulario').serialize();
           url = "{{route('calendario/guardar')}}"; 
-          token = $("#token").val();
           crudEvento(formData,url,token,calendar,tipo); 
         }
         //Modificar Evento
@@ -98,34 +108,46 @@
           formulario = $('#formulario')[0];
           formData = $('#formulario').serialize();
           url =  "http://proyectoudi.test/calendario/"+idEventoGlobal;
-          token = $("#token").val();
           crudEvento(formData,url,token,calendar,tipo); 
         }
+        //Crear Detalle
+        if (desicion =="detalle") {
+          token = $("#token").val();
+          tipo = "post";
+          formulario = $('#formulario')[0];
+          formData = $('#formulario').serialize();
+          url = "{{route('detalle/guardar')}}"; 
+          crudDetalle(formData,url,token,tipo,idEventoGlobal); 
+        }
+
         
       });
  
     });
     function PromptEliminar() {
-          //Ingresamos un mensaje a mostrar
-          var eliminacion = prompt("Escriba 'eliminar' para continuar", "hola"+idEventoGlobal);
-          //Detectamos si el usuario ingreso un valor
-          if (eliminacion == "eliminar"){
-            tipo = "DELETE"
-            url =  "http://proyectoudi.test/calendario/"+idEventoGlobal;
-            token = $("#token").val();
-            formData = idEventoGlobal;
-            crudEvento(formData,url,token,calendar,tipo); 
-            alert("eliminado");
-          }
-          //Detectamos si el usuario NO ingreso un valor
-          else 
-          {
-            toastr.warning( 'No se ha eliminado',"Cancelado", {
-                    "positionClass": "toast-top-right",
-                    "extendedTimeOut": "6000"}) 
-          }
+      //Ingresamos un mensaje a mostrar
+      var eliminacion = prompt("Escriba 'eliminar' para continuar");
+      //Detectamos si el usuario ingreso un valor
+      if (eliminacion == "eliminar"){
+        tipo = "DELETE"
+        url =  "http://proyectoudi.test/calendario/"+idEventoGlobal;
+        token = $("#token").val();
+        formData = idEventoGlobal;
+        crudEvento(formData,url,token,calendar,tipo); 
+        alert("eliminado");
+      }
+      //Detectamos si el usuario NO ingreso un valor
+      else 
+      {
+        toastr.warning( 'No se ha eliminado',"Cancelado", {
+                "positionClass": "toast-top-right",
+                "extendedTimeOut": "6000"}) 
+      }
     }
-    
+
+
+  
+   
   </script> 
 @endsection
 @section('contenido')
@@ -152,6 +174,12 @@
 <div id="formularioDiv" style="display:  none">
     @include('admin/calendario/includes/form')
 </div>
+<div id="formularioDetalleDiv" style="display:  none">
+    @include('admin/calendario/includes/formDetalle')
+    <div id="list" >
+    </div>
+</div>
+
 
 <div  id="BtnGuardar" style="display:  none">
   @include('includes.boton_form_crear')
@@ -160,8 +188,5 @@
 <div  id="BtnEditar" style="display:  none">
   @include('includes.boton_form_editar')
 </div>
-
-
-
 
 @endsection

@@ -42,7 +42,7 @@
       </tr>
     </thead>
     <tbody>
-     
+    
       @foreach ($datos as $item)
         
         <tr>
